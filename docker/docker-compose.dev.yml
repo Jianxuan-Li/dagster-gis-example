@@ -1,0 +1,41 @@
+version: "3.5"
+
+services:
+  postgis:
+    container_name: postgis
+    image: postgis/postgis:15-3.3
+    ports:
+      - "0.0.0.0:5432:5432"
+    volumes:
+      - dagster-postgisdb:/var/lib/postgresql/data
+    env_file: ../.env
+    networks:
+      - default
+  dagster:
+    image: docker.io/freeyeti/dev-in-docker:python3.11-poetry1.5.1-gdal-dev
+    container_name: dagster-dev-container
+    env_file:
+      - ../.env
+      - ../.env.local
+    environment:
+      - IN_CONTAINER=yes
+    ports:
+      - "0.0.0.0:3000:3000"
+    volumes:
+      - ../:/code
+      - ../tmp/data:/data
+      - dagster-pypoetrycache:/root/.cache/pypoetry
+    depends_on:
+      - postgis
+    networks:
+      - default
+    links:
+      - postgis:postgis
+
+volumes:
+  dagster-pypoetrycache:
+  dagster-postgisdb:
+
+networks:
+  default:
+    name: dagster-duckdb-network

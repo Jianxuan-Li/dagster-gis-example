@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dagster-test"
+version = "0.1.0"
+description = ""
+authors = ["Jack Li"]
+readme = "README.md"
+packages = [{include = "dagster_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dagster = "^1.4.10"
+dagster-webserver = "^1.4.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
