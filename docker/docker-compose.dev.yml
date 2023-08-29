@@ -11,9 +11,18 @@ services:
     env_file: ../.env
     networks:
       - default
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./static.conf:/etc/nginx/conf.d/default.conf
+      - ../tmp/data:/data
+      - ../tmp/geodata:/geodata
   dagster:
     image: docker.io/freeyeti/dev-in-docker:python3.11-poetry1.5.1-gdal-dev
-    container_name: dagster-dev-container
+    container_name: dagster_dev_container
     env_file:
       - ../.env
       - ../.env.local
@@ -24,16 +33,21 @@ services:
     volumes:
       - ../:/code
       - ../tmp/data:/data
+      - ../tmp/geodata:/geodata
       - dagster-pypoetrycache:/root/.cache/pypoetry
+      - dagster-pipcache:/root/.cache/pip
     depends_on:
       - postgis
+      - nginx
     networks:
       - default
     links:
       - postgis:postgis
+      - nginx:nginx
 
 volumes:
   dagster-pypoetrycache:
+  dagster-pipcache:
   dagster-postgisdb:
 
 networks:
