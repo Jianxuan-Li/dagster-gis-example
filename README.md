@@ -2,10 +2,20 @@
 
 An example of utilizing [Dagster](https://dagster.io/) for processing and analyzing GIS data.
 
-<img src="./docs/1.png" height="300">
-<img src="./docs/2.png" height="300">
+<img src="./docs/1.png" height="320">
+<img src="./docs/2.png" height="320">
+
+## Main GIS Features
+
+* GDAL 3.6.2 installed
+* PostGIS 3.3 (Postgresql 15) ready to use
 
 ## development
+
+### requirements
+
+* [docker](https://docs.docker.com/get-docker/) (with docker-compose) installed
+* if you are using Windows, install make first: `choco install make`. But `WSL2` is recommended.
 
 ### start the development server
 
